@@ -5,8 +5,8 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
   <head>
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">
-      Checkout Demo
+    <title layout:title-pattern="$LAYOUT_TITLE">
+      Checkout
     </title>
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -31,11 +31,6 @@
     <link rel="stylesheet" href="/css/application.css" />
   </head>
   <body>
-    <header id="header">
-      <a href="/">
-        <img src="/images/mystore-logo.svg" alt="" />
-      </a>
-    </header>
     <div class="container">
       <th:block layout:fragment="content" />
     </div>

@@ -8,7 +8,7 @@ const redirectResult = urlParams.get('redirectResult');
 // Typical checkout experience
 async function startCheckout() {
   // Used in the demo to know which type of checkout was chosen
-  const type = document.getElementById("type").innerHTML;
+  const type = "dropin";
 
   try {
     const checkoutSessionResponse = await callServer("/api/sessions?type=" + type);

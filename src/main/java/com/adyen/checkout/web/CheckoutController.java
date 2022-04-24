@@ -32,12 +32,6 @@ public class CheckoutController {
         return "index";
     }
 
-    @GetMapping("/preview")
-    public String preview(@RequestParam String type, Model model) {
-        model.addAttribute("type", type);
-        return "preview";
-    }
-
     @GetMapping("/checkout")
     public String checkout(@RequestParam String type, Model model) {
         model.addAttribute("type", type);
