@@ -27,6 +27,7 @@ public class CheckoutController {
     @Autowired
     private ApplicationProperty applicationProperty;
 
+
     @GetMapping("/")
     public String index() {
         return "index";

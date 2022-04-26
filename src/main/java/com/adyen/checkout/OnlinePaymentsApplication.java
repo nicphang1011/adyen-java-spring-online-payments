@@ -1,20 +1,15 @@
 package com.adyen.checkout;
 
-import com.adyen.checkout.data.CustomerRepository;
-import com.adyen.checkout.entity.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 import javax.annotation.PostConstruct;
 
-import static com.adyen.checkout.util.CONSTANTS.PENDING_PAYMENT_STATUS;
-import static com.adyen.checkout.util.CONSTANTS.PENDING_REG_STATUS;
-
+@ServletComponentScan
 @SpringBootApplication
 public class OnlinePaymentsApplication {
 
