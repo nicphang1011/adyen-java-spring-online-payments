@@ -2,6 +2,8 @@ package com.adyen.checkout.api;
 
 import com.adyen.Client;
 import com.adyen.checkout.ApplicationProperty;
+import com.adyen.checkout.data.CustomerController;
+import com.adyen.checkout.entity.Customer;
 import com.adyen.enums.Environment;
 import com.adyen.model.Amount;
 import com.adyen.model.checkout.CreateCheckoutSessionRequest;
@@ -30,6 +32,9 @@ public class CheckoutResource {
     private final Checkout checkout;
 
     @Autowired
+    CustomerController customerController;
+
+    @Autowired
     public CheckoutResource(ApplicationProperty applicationProperty) {
 
         this.applicationProperty = applicationProperty;
@@ -44,11 +49,14 @@ public class CheckoutResource {
     }
 
     @PostMapping("/sessions")
-    public ResponseEntity<CreateCheckoutSessionResponse> sessions(@RequestParam String type) throws IOException, ApiException {
+    public ResponseEntity<CreateCheckoutSessionResponse> sessions(@RequestParam String type, String regid, String email) throws IOException, ApiException {
+
+        Customer customer = customerController.process(new Customer(regid, email));
+
         var orderRef = UUID.randomUUID().toString();
         var amount = new Amount()
             .currency("EUR")
-            .value(1000L); // value is 10€ in minor units
+            .value(Long.valueOf(customer.getFee())); // value is 10€ in minor units
 
         var checkoutSession = new CreateCheckoutSessionRequest();
         checkoutSession.merchantAccount(this.applicationProperty.getMerchantAccount());

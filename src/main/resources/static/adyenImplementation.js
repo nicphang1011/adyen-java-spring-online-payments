@@ -9,9 +9,11 @@ const redirectResult = urlParams.get('redirectResult');
 async function startCheckout() {
   // Type of checkout chosen
   const type = "dropin";
+  const regid =  document.getElementById("regid").innerHTML;
+  const email =  document.getElementById("email").innerHTML;
 
   try {
-    const checkoutSessionResponse = await callServer("/api/sessions?type=" + type);
+    const checkoutSessionResponse = await callServer("/api/sessions?type=" + type + "&regid=" + regid + "&email=" + email);
     const checkout = await createAdyenCheckout(checkoutSessionResponse);
     checkout.create(type).mount(document.getElementById("payment"));
 
@@ -48,16 +50,8 @@ async function createAdyenCheckout(session){
           hasHolderName: true,
           holderNameRequired: true,
           name: "Credit or debit card",
-          amount: {
-            value: 1000,
-            currency: "EUR",
-          },
         },
         paypal: {
-          amount: {
-            value: 1000,
-            currency: "USD",
-          },
           environment: "test", // Change this to "live" when you're ready to accept live PayPal payments
           countryCode: "US", // Only needed for test. This will be automatically retrieved when you are in production.
         }
@@ -83,7 +77,7 @@ async function callServer(url, data) {
     body: data ? JSON.stringify(data) : "",
     headers: {
       "Content-Type": "application/json",
-    },
+    }
   });
 
   return await res.json();

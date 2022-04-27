@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CheckoutController {
@@ -34,15 +35,19 @@ public class CheckoutController {
     }
 
     @GetMapping("/checkout")
-    public String checkout(@RequestParam String type, Model model) {
+    public String checkout(@RequestParam String type, String regid, String email, Model model) {
         model.addAttribute("type", type);
+        model.addAttribute("regid", regid);
+        model.addAttribute("email", email);
         model.addAttribute("clientKey", this.applicationProperty.getClientKey());
         return "checkout";
     }
 
     @GetMapping("/result/{type}")
-    public String result(@PathVariable String type, Model model) {
+    public String result(@PathVariable String type, String regid, String email, Model model) {
         model.addAttribute("type", type);
+        model.addAttribute("regid", regid);
+        model.addAttribute("email", email);
         return "result";
     }
 

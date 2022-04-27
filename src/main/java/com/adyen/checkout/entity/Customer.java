@@ -1,10 +1,5 @@
 package com.adyen.checkout.entity;
 
-import com.adyen.checkout.data.CustomerRepository;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -30,7 +25,7 @@ public class Customer {
     private String email;
 
     public void setEmail(String email) {
-        this.email= email;
+        this.email = email;
     }
 
     public String getEmail() {
@@ -40,25 +35,39 @@ public class Customer {
     @Column(name = "regstatus")
     private String regStatus;
 
-    public String getRegStatus() { return this.regStatus; }
+    public String getRegStatus() {
+        return this.regStatus;
+    }
+
+    public void setRegStatus(String regStatus) {
+        this.regStatus = regStatus;
+    }
 
     @Column(name = "paymentstatus")
     private String paymentStatus;
 
-    public void setPaymentStatus(String paymentStatus) { this.paymentStatus = paymentStatus;}
-
-    public Customer(){
-
-    }
-
-    public Customer(String regId, String email, String regStatus, String paymentStatus){
-        this.regId = regId;
-        this.email = email;
-        this.regStatus = regStatus;
+    public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
-    public Customer(String regId, String email){
+    public String getPaymentStatus() {
+        return this.paymentStatus;
+    }
+
+
+    @Column(name = "fee")
+    private String fee;
+
+    public Integer getFee() {
+        double fee = Double.parseDouble(this.fee) * 100;
+        return (int) fee ;
+    }
+
+
+    public Customer() {
+    }
+
+    public Customer(String regId, String email) {
         this.regId = regId;
         this.email = email;
     }

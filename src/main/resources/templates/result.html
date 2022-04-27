@@ -4,6 +4,8 @@
       layout:decorate="~{layout}">
 <head>
   <title th:text="${type}"></title>
+  <div id="regid" class="hidden" th:text="${regid}"></div>
+  <div id="email" class="hidden" th:text="${email}"></div>
 </head>
 <body>
 <div layout:fragment="content" class="status-container">
@@ -12,7 +14,9 @@
     <img th:if="${type == 'success' || type == 'pending'}" src="/images/thank-you.svg" class="status-image" alt="">
 
     <p class="status-message">
-      <span th:if="${type == 'success' }">Your order has been successfully placed.</span>
+      <span th:if="${type == 'success' }">Your order has been successfully placed.
+        <meta http-equiv="refresh" content="3; URL=http://localhost:8080/payment_success/?regid=${regid}&email=${email}"   />
+      </span>
       <span th:if="${type == 'pending' }">Your order has been received! Payment completion pending.</span>
       <span th:if="${type == 'failed' }">The payment was refused. Please try a different payment method or card.</span>
       <span th:if="${type == 'error' }">
@@ -20,7 +24,6 @@
         <a href="https://docs.adyen.com/development-resources/response-handling">Response handling.</a>
       </span>
     </p>
-    <a class="button" href="/">Return Home</a>
   </div>
 </div>
 </body>
