@@ -23,7 +23,7 @@ public class SuccessServlet extends HttpServlet {
     CustomerRepository customerRepository;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String regId = request.getParameter("regid");
         String email = request.getParameter("email");
@@ -32,7 +32,6 @@ public class SuccessServlet extends HttpServlet {
         customer.setPaymentStatus("Approved");
         customer.setRegStatus("Approved");
         customerRepository.save(customer);
-
 
     }
 }

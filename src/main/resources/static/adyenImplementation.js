@@ -86,14 +86,17 @@ async function callServer(url, data) {
 function handleServerResponse(res, _component) {
     switch (res.resultCode) {
       case "Authorised":
-        window.location.href = "/result/success";
+        const regid =  document.getElementById("regid").innerHTML;
+        const email =  document.getElementById("email").innerHTML;
+        callServer("/payment_success/?regid=" + regid + "&email=" + email);
+        location.href = "https://www.google.com";
         break;
       case "Pending":
       case "Received":
-        window.location.href = "/result/pending";
+        window.location.href = "https://www.microsoft.com";;
         break;
       case "Refused":
-        window.location.href = "/result/failed";
+        location.href = "https://www.amazon.com";
         break;
       default:
         window.location.href = "/result/error";
