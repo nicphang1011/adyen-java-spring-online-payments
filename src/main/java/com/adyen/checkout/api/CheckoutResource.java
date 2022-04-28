@@ -55,8 +55,8 @@ public class CheckoutResource {
 
         var orderRef = UUID.randomUUID().toString();
         var amount = new Amount()
-            .currency("EUR")
-            .value(Long.valueOf(customer.getFee())); // value is 10€ in minor units
+            .currency("SGD")
+            .value(Long.valueOf(customer.getFee()));
 
         var checkoutSession = new CreateCheckoutSessionRequest();
         checkoutSession.merchantAccount(this.applicationProperty.getMerchantAccount());

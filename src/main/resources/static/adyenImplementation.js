@@ -84,22 +84,29 @@ async function callServer(url, data) {
 }
 
 function handleServerResponse(res, _component) {
+  let regid;
+  let email;
     switch (res.resultCode) {
       case "Authorised":
-        const regid =  document.getElementById("regid").innerHTML;
-        const email =  document.getElementById("email").innerHTML;
+        regid =  document.getElementById("regid").innerHTML;
+        email =  document.getElementById("email").innerHTML;
         callServer("/payment_success/?regid=" + regid + "&email=" + email);
-        location.href = "https://www.google.com";
+        location.href = "http://emicrosite.com/";
         break;
       case "Pending":
+        location.href = "http://emicrosite.com/";
+        break;
       case "Received":
-        window.location.href = "https://www.microsoft.com";;
+        regid =  document.getElementById("regid").innerHTML;
+        email =  document.getElementById("email").innerHTML;
+        callServer("/payment_success/?regid=" + regid + "&email=" + email);
+        location.href = "http://emicrosite.com/";
         break;
       case "Refused":
-        location.href = "https://www.amazon.com";
+        location.href = "http://emicrosite.com/";
         break;
       default:
-        window.location.href = "/result/error";
+        location.href = "http://emicrosite.com/";
         break;
     }
 }

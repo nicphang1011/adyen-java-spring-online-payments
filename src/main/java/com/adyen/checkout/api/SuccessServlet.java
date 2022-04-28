@@ -10,8 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
+import static com.adyen.checkout.util.Constants.APPROVED_PAYMENT_STATUS;
+import static com.adyen.checkout.util.Constants.APPROVED_REG_STATUS;
 
 @WebServlet(urlPatterns = "/payment_success/", loadOnStartup = 1)
 public class SuccessServlet extends HttpServlet {
@@ -29,8 +31,8 @@ public class SuccessServlet extends HttpServlet {
         String email = request.getParameter("email");
 
         Customer customer = customerController.process(new Customer(regId, email));
-        customer.setPaymentStatus("Approved");
-        customer.setRegStatus("Approved");
+        customer.setPaymentStatus(APPROVED_PAYMENT_STATUS);
+        customer.setRegStatus(APPROVED_REG_STATUS);
         customerRepository.save(customer);
 
     }
