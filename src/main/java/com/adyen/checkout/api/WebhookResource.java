@@ -1,6 +1,8 @@
 package com.adyen.checkout.api;
 
 import com.adyen.checkout.ApplicationProperty;
+import com.adyen.checkout.data.CustomerRepository;
+import com.adyen.checkout.entity.Customer;
 import com.adyen.model.notification.NotificationRequest;
 import com.adyen.model.notification.NotificationRequestItem;
 import com.adyen.util.HMACValidator;
@@ -19,6 +21,9 @@ import java.security.SignatureException;
 @RequestMapping("/api")
 public class WebhookResource {
     private final Logger log = LoggerFactory.getLogger(WebhookResource.class);
+
+    @Autowired
+    CustomerRepository customerRepository;
 
     private ApplicationProperty applicationProperty;
 
@@ -50,6 +55,9 @@ public class WebhookResource {
                           "Alias : {}\n" +
                           "PSP reference : {}"
                           , item.getEventCode(), item.getMerchantReference(), item.getAdditionalData().get("alias"), item.getPspReference());
+                      Customer customer = customerRepository.findByTransactionref(item.getMerchantReference());
+                      customer.setTransactionid(item.getPspReference());
+                      customer.setPaymentmessage(item.getAdditionalData().get("refusalReasonRaw"));
                   } else {
                       // invalid HMAC signature: do not send [accepted] response
                       log.warn("Could not validate HMAC signature for incoming webhook message: {}", item);

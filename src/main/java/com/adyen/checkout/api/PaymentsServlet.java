@@ -24,6 +24,7 @@ public class PaymentsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String regId = request.getParameter("regid");
+        String memberId = request.getParameter("memberid");
         String email = request.getParameter("email");
 
         Customer customer = customerRepository.findByRegIdAndEmail(regId, email);
@@ -35,8 +36,9 @@ public class PaymentsServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("type", "dropin");
         session.setAttribute("regid", regId);
+        session.setAttribute("memberid", memberId);
         session.setAttribute("email", email);
-        response.sendRedirect("/checkout?type=dropin&regid=" + regId + "&email=" + email);
+        response.sendRedirect("/checkout?type=dropin&regid=" + regId + "&memberid=" + memberId + "&email=" + email);
 
     }
 }

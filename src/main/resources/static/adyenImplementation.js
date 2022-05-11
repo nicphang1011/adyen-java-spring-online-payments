@@ -10,10 +10,11 @@ async function startCheckout() {
   // Type of checkout chosen
   const type = "dropin";
   const regid =  document.getElementById("regid").innerHTML;
+  const memberid = document.getElementById("memberid").innerHTML;
   const email =  document.getElementById("email").innerHTML;
 
   try {
-    const checkoutSessionResponse = await callServer("/api/sessions?type=" + type + "&regid=" + regid + "&email=" + email);
+    const checkoutSessionResponse = await callServer("/api/sessions?type=" + type + "&regid=" + regid + "&memberid=" + memberid + "&email=" + email);
     const checkout = await createAdyenCheckout(checkoutSessionResponse);
     checkout.create(type).mount(document.getElementById("payment"));
 
@@ -89,6 +90,7 @@ function handleServerResponse(res, _component) {
     switch (res.resultCode) {
       case "Authorised":
         regid =  document.getElementById("regid").innerHTML;
+        memberid = document.getElementById("memberid").innerHTML;
         email =  document.getElementById("email").innerHTML;
         callServer("/payment_success/?regid=" + regid + "&email=" + email);
         location.href = "http://emicrosite.com/";

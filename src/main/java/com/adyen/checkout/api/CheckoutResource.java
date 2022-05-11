@@ -3,6 +3,7 @@ package com.adyen.checkout.api;
 import com.adyen.Client;
 import com.adyen.checkout.ApplicationProperty;
 import com.adyen.checkout.data.CustomerController;
+import com.adyen.checkout.data.CustomerRepository;
 import com.adyen.checkout.entity.Customer;
 import com.adyen.enums.Environment;
 import com.adyen.model.Amount;
@@ -17,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * REST controller for using Adyen checkout API
@@ -30,6 +30,9 @@ public class CheckoutResource {
     private ApplicationProperty applicationProperty;
 
     private final Checkout checkout;
+
+    @Autowired
+    CustomerRepository customerRepository;
 
     @Autowired
     CustomerController customerController;
@@ -49,14 +52,17 @@ public class CheckoutResource {
     }
 
     @PostMapping("/sessions")
-    public ResponseEntity<CreateCheckoutSessionResponse> sessions(@RequestParam String type, String regid, String email) throws IOException, ApiException {
+    public ResponseEntity<CreateCheckoutSessionResponse> sessions(@RequestParam String type, String regid, String memberid, String email) throws IOException, ApiException {
 
         Customer customer = customerController.process(new Customer(regid, email));
 
-        var orderRef = UUID.randomUUID().toString();
+        var orderRef = memberid+'-'+regid;
         var amount = new Amount()
             .currency("SGD")
             .value(Long.valueOf(customer.getFee()));
+
+        customer.setTransactionref(orderRef);
+        customerRepository.save(customer);
 
         var checkoutSession = new CreateCheckoutSessionRequest();
         checkoutSession.merchantAccount(this.applicationProperty.getMerchantAccount());

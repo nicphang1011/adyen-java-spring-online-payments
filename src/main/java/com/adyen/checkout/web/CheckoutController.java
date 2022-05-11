@@ -33,9 +33,10 @@ public class CheckoutController {
 
 
     @GetMapping("/checkout")
-    public String checkout(@RequestParam String type, String regid, String email, Model model) {
+    public String checkout(@RequestParam String type, String regid, String memberid, String email, Model model) {
         model.addAttribute("type", type);
         model.addAttribute("regid", regid);
+        model.addAttribute("memberid", memberid);
         model.addAttribute("email", email);
         model.addAttribute("clientKey", this.applicationProperty.getClientKey());
         return "checkout";

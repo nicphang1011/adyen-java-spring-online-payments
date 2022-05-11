@@ -21,6 +21,17 @@ public class Customer {
         return this.regId;
     }
 
+    @Column(name = "memberid")
+    private String memberid;
+
+    public void setMemberid(String memberid) {
+        this.memberid = memberid;
+    }
+
+    public String getMemberid() {
+        return this.memberid;
+    }
+
     @Column(name = "email")
     private String email;
 
@@ -63,6 +74,38 @@ public class Customer {
         return (int) fee ;
     }
 
+    @Column(name = "transactionref")
+    private String transactionref;
+
+    public void setTransactionref(String transactionref) {
+        this.transactionref = transactionref;
+    }
+
+    public String getTransactionref() {
+        return this.transactionref;
+    }
+
+    @Column(name = "transactionid")
+    private String transactionid;
+
+    public void setTransactionid(String transactionid) {
+        this.transactionid = transactionid;
+    }
+
+    public String getTransactionid() {
+        return this.transactionid;
+    }
+
+    @Column(name = "paymentmessage")
+    private String paymentmessage;
+
+    public void setPaymentmessage(String paymentmessage) {
+        this.paymentmessage = paymentmessage;
+    }
+
+    public String getPaymentmessage() {
+        return this.paymentmessage;
+    }
 
     public Customer() {
     }
