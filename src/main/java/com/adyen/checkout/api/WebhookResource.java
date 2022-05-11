@@ -54,10 +54,11 @@ public class WebhookResource {
                           "Merchant Reference: {}\n" +
                           "Alias : {}\n" +
                           "PSP reference : {}"
-                          , item.getEventCode(), item.getMerchantReference(), item.getAdditionalData().get("alias"), item.getPspReference());
+                          , item.getEventCode(), item.getMerchantReference(), item.getAdditionalData().get("refusalReasonRaw"), item.getPspReference());
                       Customer customer = customerRepository.findByTransactionref(item.getMerchantReference());
                       customer.setTransactionid(item.getPspReference());
                       customer.setPaymentmessage(item.getAdditionalData().get("refusalReasonRaw"));
+                      customerRepository.save(customer);
                   } else {
                       // invalid HMAC signature: do not send [accepted] response
                       log.warn("Could not validate HMAC signature for incoming webhook message: {}", item);
