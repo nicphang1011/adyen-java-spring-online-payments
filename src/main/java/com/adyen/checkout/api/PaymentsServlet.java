@@ -24,21 +24,31 @@ public class PaymentsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String regId = request.getParameter("regid");
-        String memberId = request.getParameter("memberid");
+        String memberid = request.getParameter("memberid");
         String email = request.getParameter("email");
+        String languageSite = request.getParameter("languagesite");
 
         Customer customer = customerRepository.findByRegIdAndEmail(regId, email);
+//
+//        /**Added by Simon*/
+//        String languageSite = customer.getLanguageSite();
+
         if(customer.getPaymentStatus().equals(APPROVED_PAYMENT_STATUS) && customer.getRegStatus().equals(APPROVED_REG_STATUS)) {
-            response.sendRedirect("http://emicrosite.com/");
+            response.sendRedirect("https://www.emicrosite.com/" + languageSite); /**Added by Simon*/ /**To update*/
             return;
         }
 
         HttpSession session = request.getSession(true);
         session.setAttribute("type", "dropin");
         session.setAttribute("regid", regId);
-        session.setAttribute("memberid", memberId);
+        session.setAttribute("memberid", memberid);
         session.setAttribute("email", email);
-        response.sendRedirect("/checkout?type=dropin&regid=" + regId + "&memberid=" + memberId + "&email=" + email);
+
+        /**Added by Simon*/
+        session.setAttribute("languagesite", languageSite);
+
+        response.sendRedirect("http://localhost:8080/checkout?type=dropin&regid=" + regId + "&memberid=" + memberid + "&email=" + email + "&languagesite=" + languageSite); /**Added by Simon*/
 
     }
+
 }

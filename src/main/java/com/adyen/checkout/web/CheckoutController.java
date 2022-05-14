@@ -33,13 +33,23 @@ public class CheckoutController {
 
 
     @GetMapping("/checkout")
-    public String checkout(@RequestParam String type, String regid, String memberid, String email, Model model) {
+    public String checkout(@RequestParam String type, String regid, String memberid, String email, String languagesite, Model model) {
         model.addAttribute("type", type);
         model.addAttribute("regid", regid);
         model.addAttribute("memberid", memberid);
         model.addAttribute("email", email);
+        model.addAttribute("languagesite", languagesite);
         model.addAttribute("clientKey", this.applicationProperty.getClientKey());
         return "checkout";
+    }
+
+    @GetMapping("/refund")
+    public String refund(@RequestParam String regid, String email, String languagesite, Model model) {
+        model.addAttribute("regid", regid);
+        model.addAttribute("email", email);
+        model.addAttribute("languagesite", languagesite);
+        model.addAttribute("clientKey", this.applicationProperty.getClientKey());
+        return "refund";
     }
 
     @GetMapping("/result/{type}")
@@ -49,8 +59,10 @@ public class CheckoutController {
     }
 
     @GetMapping("/redirect")
-    public String redirect(Model model) {
+    public String redirect(@RequestParam String orderRef, String redirectResult, Model model) {
         model.addAttribute("clientKey", this.applicationProperty.getClientKey());
+        model.addAttribute("orderRef", orderRef);
+        model.addAttribute("redirectResult", redirectResult);
         return "redirect";
     }
 }

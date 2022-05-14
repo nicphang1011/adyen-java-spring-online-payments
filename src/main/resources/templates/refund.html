@@ -4,12 +4,10 @@
       layout:decorate="~{layout}">
 
 <body>
-<div layout:fragment="content" id="payment-page">
+<div layout:fragment="content" id="refund-page">
   <!-- Hidden divs with data passed from the Express server -->
   <div id="clientKey" class="hidden" th:text="${clientKey}"></div>
-  <div id="type" class="hidden" th:text="${type}"></div>
   <div id="regid" class="hidden" th:text="${regid}"></div>
-  <div id="memberid" class="hidden" th:text="${memberid}"></div>
   <div id="email" class="hidden" th:text="${email}"></div>
   <div id="languagesite" class="hidden" th:text="${languagesite}"></div>
 
@@ -21,6 +19,6 @@
     </div>
   </div>
   <!-- Adyen Component client code -->
-  <script type="text/javascript" src="/adyenImplementation.js"></script>
+  <script type="text/javascript" src="/adyenimplementation.js"></script>
 </div>
 </body>

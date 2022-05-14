@@ -60,11 +60,13 @@ async function createAdyenCheckout(session){
       onPaymentCompleted: (result, component) => {
         console.info("onPaymentCompleted");
         console.info(result, component);
+
         handleServerResponse(result, component);
       },
       onError: (error, component) => {
         console.error("onError");
         console.error(error.name, error.message, error.stack, component);
+
         handleServerResponse(error, component);
       },
     }
@@ -87,30 +89,47 @@ async function callServer(url, data) {
 function handleServerResponse(res, _component) {
   let regid;
   let email;
-    switch (res.resultCode) {
-      case "Authorised":
-        regid =  document.getElementById("regid").innerHTML;
-        memberid = document.getElementById("memberid").innerHTML;
-        email =  document.getElementById("email").innerHTML;
-        callServer("/payment_success/?regid=" + regid + "&email=" + email);
-        location.href = "http://emicrosite.com/";
-        break;
-      case "Pending":
-        location.href = "http://emicrosite.com/";
-        break;
-      case "Received":
-        regid =  document.getElementById("regid").innerHTML;
-        email =  document.getElementById("email").innerHTML;
-        callServer("/payment_success/?regid=" + regid + "&email=" + email);
-        location.href = "http://emicrosite.com/";
-        break;
-      case "Refused":
-        location.href = "http://emicrosite.com/";
-        break;
-      default:
-        location.href = "http://emicrosite.com/";
-        break;
-    }
+  let orderRef;
+  let redirectResult;
+
+  switch (res.resultCode) {
+    case "Authorised":
+      if(document.getElementById("regid") && document.getElementById("email")) {
+        regid = document.getElementById("regid").innerHTML;
+        email = document.getElementById("email").innerHTML;
+      } else if (document.getElementById("orderRef")){
+        orderRef = document.getElementById("orderRef").innerHTML;
+        redirectResult = document.getElementById("redirectResult").innerHTML;
+      }
+      callServer("/payment_success/?regid=" + regid + "&email=" + email + "&orderRef=" + orderRef + "&redirectResult=" + redirectResult);
+      setTimeout(function(){location.href= "https://www.emicrosite.com/authorised";}, 3000);
+      //location.href = "https://www.emicrosite.com/authorised";
+      break;
+    case "Pending":
+      setTimeout(function(){location.href= "https://www.emicrosite.com/pending";}, 3000);
+      //location.href = "https://www.emicrosite.com/pending";
+      break;
+    case "Received":
+      if(document.getElementById("regid") && document.getElementById("email")) {
+        regid = document.getElementById("regid").innerHTML;
+        email = document.getElementById("email").innerHTML;
+      } else if (document.getElementById("orderRef")){
+        orderRef = document.getElementById("orderRef").innerHTML;
+        redirectResult = document.getElementById("redirectResult").innerHTML;
+      }
+      callServer("/payment_success/?regid=" + regid + "&email=" + email + "&orderRef=" + orderRef + "&redirectResult=" + redirectResult);
+      setTimeout(function(){location.href= "https://www.emicrosite.com/received";}, 3000);
+      //location.href = "https://www.emicrosite.com/received";
+      break;
+    case "Refused":
+      setTimeout(function(){location.href= "https://www.emicrosite.com/refused";}, 3000);
+      //location.href = "https://www.emicrosite.com/refused";
+      break;
+    default:
+      setTimeout(function(){location.href= "https://www.emicrosite.com/default";}, 3000);
+      //location.href = "https://www.emicrosite.com/default";
+      break;
+  }
 }
 
 if (!sessionId) { startCheckout() } else { finalizeCheckout(); }

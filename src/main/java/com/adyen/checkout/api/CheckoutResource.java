@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * REST controller for using Adyen checkout API
@@ -56,9 +57,9 @@ public class CheckoutResource {
 
         Customer customer = customerController.process(new Customer(regid, email));
 
-        var orderRef = memberid+'-'+regid;
+        var orderRef = memberid+'-'+regid+"-"+UUID.randomUUID();
         var amount = new Amount()
-            .currency("SGD")
+            .currency("USD")
             .value(Long.valueOf(customer.getFee()));
 
         customer.setTransactionref(orderRef);

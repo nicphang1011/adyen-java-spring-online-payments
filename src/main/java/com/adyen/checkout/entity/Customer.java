@@ -66,6 +66,18 @@ public class Customer {
     }
 
 
+    @Column(name = "languagesite")
+    private String languageSite;
+
+    public void setLanguageSite(String languageSite) {
+        this.languageSite = languageSite;
+    }
+
+    public String getLanguageSite() {
+        return this.languageSite;
+    }
+
+
     @Column(name = "fee")
     private String fee;
 
@@ -105,6 +117,40 @@ public class Customer {
 
     public String getPaymentmessage() {
         return this.paymentmessage;
+    }
+
+    @Column(name = "refundamount")
+    private String refundamount;
+
+    public Integer getRefundAmount() {
+        double fee = Double.parseDouble(this.refundamount) * 100;
+        return (int) fee ;
+    }
+
+    public void setRefundAmount(String refundAmount) {
+        this.refundamount = refundAmount;
+    }
+
+    @Column(name = "paymentdate")
+    private String paymentDate;
+
+    public void setPaymentDate(String paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getPaymentDate() {
+        return this.paymentDate;
+    }
+
+    @Column(name = "refunddate")
+    private String refundDate;
+
+    public void setRefundDate(String refundDate) {
+        this.refundDate = refundDate;
+    }
+
+    public String getRefundDate() {
+        return this.refundDate;
     }
 
     public Customer() {
